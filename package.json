@@ -6,12 +6,12 @@
   "main": "src/index.js",
   "scripts": {
     "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
+    "format": "prettier --write src/*.js src/**/*.js",
+    "lint": "eslint src --color",
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "publish": "electron-forge publish",
-    "lint": "eslint src --color",
-    "format-source": "prettier --write"
+    "publish": "electron-forge publish"
   },
   "keywords": [],
   "author": "Daniel Bergmann",
@@ -52,7 +52,10 @@
     "electron-compile": "^6.4.2",
     "electron-squirrel-startup": "^1.0.0",
     "react": "^16.4.0",
-    "react-dom": "^16.4.0"
+    "react-dom": "^16.4.0",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
+    "redux-saga": "^0.16.0"
   },
   "devDependencies": {
     "babel-plugin-transform-async-to-generator": "^6.24.1",
