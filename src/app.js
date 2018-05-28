@@ -1,7 +1,38 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import Window from './ui/window';
+
+
+ReactDOM.render(
+  <Window />,
+  document.getElementById('app')
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import fs from 'fs';
 import path from 'path';
-// import { remote as app } from 'electron';
-const app = require('electron').remote;
+import { remote as app } from 'electron';
+// const app = require('electron').remote;
 const { dialog } = app;
 
 const video = document.getElementById('video');
