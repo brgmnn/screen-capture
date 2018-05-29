@@ -4,13 +4,15 @@ import Recording from "../lib/recording";
 import PreviewVideo from "./preview-video";
 import RecordButton from "./record-button";
 import SaveButton from "./save-button";
+import Button from "./button";
 
 class Window extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      recording: false
+      recording: false,
+      record: null
     };
 
     this.onRecord = this.onRecord.bind(this);
@@ -18,32 +20,44 @@ class Window extends Component {
     this.recording = null;
   }
 
-  onRecord(recording) {
-    if (!this.recording) {
-      this.recording = new Recording(window.stream);
-    }
+  onNew(callback) {
+    this.setState({ record: new Recording(window.stream) }, callback);
+  }
 
-    if (recording) {
-      this.recording.start();
-      this.setState({ recording: true });
-    } else if (!recording) {
-      this.recording.stop();
-      this.setState({ recording: false });
+  onRecord(recording) {
+    let { record } = this.state;
+
+    const toggle = () => {
+      if (recording) {
+        this.state.record.start();
+        this.setState({ recording: true });
+      } else if (!recording) {
+        this.state.record.stop();
+        this.setState({ recording: false });
+      }
+    };
+
+    if (!record) {
+      this.onNew(toggle);
+    } else {
+      toggle();
     }
   }
 
   onSave() {
-    this.recording.save();
+    this.state.record.save();
   }
 
   render() {
-    const { recording } = this.state;
+    const { record, recording } = this.state;
 
     return (
       <Fragment>
         <PreviewVideo recording={recording} />
         <RecordButton onClick={this.onRecord} />
-        <SaveButton onClick={this.onSave} />
+        <Button onClick={this.onSave} disabled={!record}>
+          Save
+        </Button>
       </Fragment>
     );
   }

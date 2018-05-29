@@ -15,6 +15,7 @@
   },
   "keywords": [],
   "author": "Daniel Bergmann",
+  "repository": "https://github.com/brgmnn/screen-capture",
   "license": "MIT",
   "config": {
     "forge": {

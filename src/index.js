@@ -15,8 +15,9 @@ let mainWindow;
 const createWindow = () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600
+    width: 300,
+    height: 300,
+    useContentSize: true
   });
 
   // and load the index.html of the app.
@@ -55,15 +56,3 @@ app.on("activate", () => {
     createWindow();
   }
 });
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.
-try {
-  fs.writeFileSync(
-    path.join(app.getPath("videos"), "testfile.txt"),
-    "hello from electron",
-    "utf-8"
-  );
-} catch (e) {
-  console.error("Failed to save the file !");
-}

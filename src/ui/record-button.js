@@ -23,7 +23,7 @@ class RecordButton extends Component {
     const { recording } = this.state;
 
     return (
-      <button id="record-button" onClick={this.onClick}>
+      <button onClick={this.onClick}>
         {recording ? "Stop Recording" : "Record"}
       </button>
     );
