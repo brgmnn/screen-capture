@@ -1,7 +1,7 @@
 {
   "name": "screen-capture",
   "productName": "screen-capture",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "My Electron application description",
   "main": "src/index.js",
   "scripts": {
@@ -40,8 +40,8 @@
       "electronInstallerDebian": {},
       "electronInstallerRedhat": {},
       "github_repository": {
-        "owner": "",
-        "name": ""
+        "owner": "brgmnn",
+        "name": "screen-capture"
       },
       "windowsStoreConfig": {
         "packageName": "",

@@ -26,7 +26,7 @@ class RecordButton extends Component {
 
     return (
       <Button className="primary size-big top" onClick={this.onClick}>
-        {recording ? "Stop Recording" : "Record"}
+        {recording ? "Stop" : "Record"}
       </Button>
     );
   }
