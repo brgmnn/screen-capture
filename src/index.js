@@ -1,6 +1,9 @@
 import fs from "fs";
 import path from "path";
 import { app, BrowserWindow } from "electron";
+import updater from "update-electron-app";
+
+updater({ updateInterval: "1 hour" });
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
