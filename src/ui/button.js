@@ -1,13 +1,16 @@
 import React, { Component } from "react";
+import classNames from "classnames";
 
 class SaveButton extends Component {
   render() {
-    const { children, disabled, onClick } = this.props;
+    const { children, className, disabled, onClick } = this.props;
+
+    const classes = classNames("button", className, { disabled });
 
     return (
-      <button onClick={onClick} disabled={disabled}>
+      <span className={classes} onClick={onClick} disabled={disabled}>
         {children}
-      </button>
+      </span>
     );
   }
 }

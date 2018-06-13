@@ -1,2 +1,56 @@
+@function button-bg($color)
+  @return linear-gradient(to bottom, $color, darken($color, 6%))
+
+@function button-border($color)
+  @return 1px solid desaturate(darken($color, 30%), 20%)
+
+@mixin button-colors($color)
+  background: button-bg($color)
+  border: button-border($color)
+  text-shadow: 1px 1px 3px darken($color, 30%)
+
+  &:hover:not(.disabled)
+    background: button-bg(darken($color, 3%))
+
+  &:active:not(.disabled)
+    box-shadow: inset 0 0.15em 0.3em rgba(27,31,35,0.15)
+
+
 .button
-  background: #008800
+  $color: hsl(0, 0, 90%)
+
+  @include button-colors($color)
+  border-radius: 0.25em
+  font-weight: bold
+  text-align: center
+  padding: 0.4em 0.4em
+  margin: 0.2em
+
+  &:hover
+    cursor: pointer
+
+  &.disabled
+    color: #aaaaaa
+    cursor: default
+    text-shadow: unset
+
+  &.top
+    margin-bottom: 0
+    border-bottom-left-radius: 0
+    border-bottom-right-radius: 0
+
+  &.bottom
+    margin-top: 0
+    border-top-left-radius: 0
+    border-top-right-radius: 0
+    border-top: 0
+
+  &.size-big
+    font-size: 1.6rem
+
+  &.primary
+    @include button-colors($primary-color)
+    color: $neutral-100-color
+
+    &.active
+      box-shadow: 0 0 0 0.2em rgba(3,102,214,0.3)

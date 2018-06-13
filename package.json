@@ -1,7 +1,7 @@
 {
   "name": "screen-capture",
   "productName": "screen-capture",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "My Electron application description",
   "main": "src/index.js",
   "scripts": {
@@ -16,7 +16,7 @@
   "keywords": [],
   "author": "Daniel Bergmann",
   "repository": "https://github.com/brgmnn/screen-capture",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "config": {
     "forge": {
       "make_targets": {
@@ -50,6 +50,7 @@
     }
   },
   "dependencies": {
+    "classnames": "^2.2.5",
     "electron-compile": "^6.4.2",
     "electron-squirrel-startup": "^1.0.0",
     "react": "^16.4.0",

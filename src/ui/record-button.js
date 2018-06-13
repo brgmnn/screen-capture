@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import Button from "./button";
+
 class RecordButton extends Component {
   constructor(props) {
     super(props);
@@ -23,9 +25,9 @@ class RecordButton extends Component {
     const { recording } = this.state;
 
     return (
-      <button onClick={this.onClick}>
+      <Button className="primary size-big top" onClick={this.onClick}>
         {recording ? "Stop Recording" : "Record"}
-      </button>
+      </Button>
     );
   }
 }

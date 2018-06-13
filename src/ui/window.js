@@ -3,7 +3,6 @@ import getStream from "../lib/get-stream";
 import Recording from "../lib/recording";
 import PreviewVideo from "./preview-video";
 import RecordButton from "./record-button";
-import SaveButton from "./save-button";
 import Button from "./button";
 
 class Window extends Component {
@@ -55,7 +54,11 @@ class Window extends Component {
       <Fragment>
         <PreviewVideo recording={recording} />
         <RecordButton onClick={this.onRecord} />
-        <Button onClick={this.onSave} disabled={!record}>
+        <Button
+          className="bottom size-big"
+          onClick={this.onSave}
+          disabled={!record || recording}
+        >
           Save
         </Button>
       </Fragment>
