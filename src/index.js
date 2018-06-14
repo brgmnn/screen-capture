@@ -1,15 +1,16 @@
 import fs from "fs";
 import path from "path";
 import { app, BrowserWindow } from "electron";
-import { autoUpdater } from "electron-updater";
-
-autoUpdater.checkForUpdatesAndNotify();
+import isDev from "electron-is-dev";
+import autoUpdate from "./auto-update";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
   // eslint-disable-line global-require
   app.quit();
 }
+
+console.log(`Screen Capture v${app.getVersion()}`);
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -27,7 +28,9 @@ const createWindow = () => {
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+  if (isDev) {
+    mainWindow.webContents.openDevTools();
+  }
 
   // Emitted when the window is closed.
   mainWindow.on("closed", () => {
@@ -38,10 +41,15 @@ const createWindow = () => {
   });
 };
 
+const onReady = () => {
+  createWindow();
+  autoUpdate();
+};
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on("ready", createWindow);
+app.on("ready", onReady);
 
 // Quit when all windows are closed.
 app.on("window-all-closed", () => {
