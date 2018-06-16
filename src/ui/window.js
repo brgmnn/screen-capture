@@ -4,6 +4,9 @@ import Recording from "../lib/recording";
 import PreviewVideo from "./preview-video";
 import RecordButton from "./record-button";
 import Button from "./button";
+import SourcesList from "./sources-list";
+
+import { desktopCapturer } from "electron";
 
 class Window extends Component {
   constructor(props) {
@@ -13,6 +16,12 @@ class Window extends Component {
       recording: false,
       record: null
     };
+
+    desktopCapturer.getSources({types: ['window', 'screen']}, (error, sources) => {
+      sources.forEach(source => {
+        console.log("source:", source);
+      })
+    });
 
     this.onRecord = this.onRecord.bind(this);
     this.onSave = this.onSave.bind(this);
@@ -61,6 +70,7 @@ class Window extends Component {
         >
           Save
         </Button>
+        <SourcesList />
       </Fragment>
     );
   }

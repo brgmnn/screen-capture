@@ -1,9 +1,13 @@
 #preview-video
-  width: 100%
+  $frame-width: 0.25rem
+  $border-width: 1px
+
+  width: calc(100% - 2*#{$frame-width})
   height: 180px
   background: #000
-  margin: 0
-  border: .2rem #444444 solid
+  margin: $frame-width
+  border: $border-width $neutral-0-color solid
+  box-shadow: 0 0 0 $frame-width rgba(3,102,214,0.3)
 
   &.recording
-    border-color: $primary-color
+    box-shadow: 0 0 0 $frame-width $primary-color
