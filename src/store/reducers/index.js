@@ -4,6 +4,5 @@ import stream from "./stream";
 
 export default combineReducers({
   recording,
-  stream,
-  empty: (store = null) => store
+  stream
 });

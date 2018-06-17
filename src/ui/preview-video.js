@@ -22,11 +22,9 @@ class PreviewVideo extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.source === this.props.source) {
-      return;
+    if (prevProps.source !== this.props.source) {
+      this.playSource(this.props.source);
     }
-
-    this.playSource(this.props.source);
   }
 
   render() {
