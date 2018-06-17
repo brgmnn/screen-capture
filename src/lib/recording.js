@@ -1,6 +1,7 @@
 import fs from "fs";
 import { remote as app } from "electron";
 import blobToBuffer from "./blob-to-buffer";
+
 const { dialog } = app;
 
 export default class Recording {

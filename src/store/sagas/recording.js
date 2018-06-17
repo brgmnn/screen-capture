@@ -1,10 +1,10 @@
-import { call, select, takeEvery } from "redux-saga/effects";
-import * as Actions from "../actions/recording";
-
 import fs from "fs";
 import { remote as app } from "electron";
+import { call, select, takeEvery } from "redux-saga/effects";
+import * as Actions from "../actions/recording";
 import blobToBuffer from "../../lib/blob-to-buffer";
 import getStream from "../../lib/get-stream";
+
 const { dialog } = app;
 
 let recorder = null;

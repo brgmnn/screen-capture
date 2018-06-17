@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import getStream from "../lib/get-stream";
 import Recording from "../lib/recording";
+import * as RecordingActions from "../store/actions/recording";
 import PreviewVideo from "./preview-video";
 import RecordButton from "./record-button";
 import Button from "./button";
 import SourcesList from "./sources-list";
-import * as RecordingActions from "../store/actions/recording";
 
 const Window = ({
   isRecording,

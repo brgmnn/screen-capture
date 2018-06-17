@@ -1,5 +1,6 @@
 module.exports = {
   extends: [
+    "./lint/imports.js",
     "prettier",
     "prettier/react"
   ],

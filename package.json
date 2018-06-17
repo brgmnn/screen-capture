@@ -6,8 +6,8 @@
   "main": "src/index.js",
   "scripts": {
     "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
-    "format": "prettier --write \"src/**/*.js\"",
-    "lint": "eslint src --color",
+    "format": "eslint --fix \"src\" && prettier --write \"src/**/*.js\" \"lint/*.js\"",
+    "lint": "eslint src lint --color",
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
@@ -54,8 +54,8 @@
     "electron-compile": "^6.4.2",
     "electron-is-dev": "^0.3.0",
     "electron-squirrel-startup": "^1.0.0",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
     "redux-saga": "^0.16.0"
@@ -72,7 +72,7 @@
     "eslint-plugin-import": "^2.12.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-prettier": "^2.6.0",
-    "eslint-plugin-react": "^7.8.2",
-    "prettier": "^1.13.0"
+    "eslint-plugin-react": "^7.9.1",
+    "prettier": "^1.13.5"
   }
 }
