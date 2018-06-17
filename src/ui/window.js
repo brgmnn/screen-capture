@@ -1,69 +1,56 @@
 import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import getStream from "../lib/get-stream";
 import Recording from "../lib/recording";
 import PreviewVideo from "./preview-video";
 import RecordButton from "./record-button";
 import Button from "./button";
+import SourcesList from "./sources-list";
+import * as RecordingActions from "../store/actions/recording";
 
-class Window extends Component {
-  constructor(props) {
-    super(props);
+const Window = ({
+  isRecording,
+  startRecording,
+  saveRecording,
+  stopRecording
+}) => {
+  const onRecord = isRecording ? stopRecording : startRecording;
 
-    this.state = {
-      recording: false,
-      record: null
-    };
+  return (
+    <Fragment>
+      <PreviewVideo recording={isRecording} />
+      <SourcesList />
 
-    this.onRecord = this.onRecord.bind(this);
-    this.onSave = this.onSave.bind(this);
-    this.recording = null;
-  }
+      <Button className="primary size-big top" onClick={onRecord}>
+        {isRecording ? "Stop Recording" : "Record"}
+      </Button>
+      <Button
+        className="bottom size-big"
+        onClick={saveRecording}
+        disabled={isRecording}
+      >
+        Save
+      </Button>
+    </Fragment>
+  );
+};
 
-  onNew(callback) {
-    this.setState({ record: new Recording(window.stream) }, callback);
-  }
+export const mapStateToProps = state => ({
+  isRecording: state.recording.active,
+  source: state.stream.source
+});
+export const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      startRecording: RecordingActions.start,
+      stopRecording: RecordingActions.stop,
+      saveRecording: RecordingActions.save
+    },
+    dispatch
+  );
 
-  onRecord(recording) {
-    let { record } = this.state;
-
-    const toggle = () => {
-      if (recording) {
-        this.state.record.start();
-        this.setState({ recording: true });
-      } else if (!recording) {
-        this.state.record.stop();
-        this.setState({ recording: false });
-      }
-    };
-
-    if (!record) {
-      this.onNew(toggle);
-    } else {
-      toggle();
-    }
-  }
-
-  onSave() {
-    this.state.record.save();
-  }
-
-  render() {
-    const { record, recording } = this.state;
-
-    return (
-      <Fragment>
-        <PreviewVideo recording={recording} />
-        <RecordButton onClick={this.onRecord} />
-        <Button
-          className="bottom size-big"
-          onClick={this.onSave}
-          disabled={!record || recording}
-        >
-          Save
-        </Button>
-      </Fragment>
-    );
-  }
-}
-
-export default Window;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Window);

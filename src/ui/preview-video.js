@@ -1,17 +1,30 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
+import { connect } from "react-redux";
 import getStream from "../lib/get-stream";
 
-class PreviewVideo extends Component {
+class PreviewVideo extends PureComponent {
   constructor(props) {
     super(props);
+
+    this.playSource = this.playSource.bind(this);
   }
 
-  componentDidMount() {
-    getStream().then(stream => {
+  playSource(source) {
+    getStream(source).then(stream => {
       this.video.srcObject = stream;
       this.video.play();
       window.stream = stream;
     });
+  }
+
+  componentDidMount() {
+    this.playSource();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.source !== this.props.source) {
+      this.playSource(this.props.source);
+    }
   }
 
   render() {
@@ -29,4 +42,6 @@ class PreviewVideo extends Component {
   }
 }
 
-export default PreviewVideo;
+export const mapStateToProps = state => ({ source: state.stream.source });
+
+export default connect(mapStateToProps)(PreviewVideo);
