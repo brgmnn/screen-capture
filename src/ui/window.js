@@ -1,79 +1,56 @@
 import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import getStream from "../lib/get-stream";
 import Recording from "../lib/recording";
 import PreviewVideo from "./preview-video";
 import RecordButton from "./record-button";
 import Button from "./button";
 import SourcesList from "./sources-list";
+import * as RecordingActions from "../store/actions/recording";
 
-import { desktopCapturer } from "electron";
+const Window = ({
+  isRecording,
+  startRecording,
+  saveRecording,
+  stopRecording
+}) => {
+  const onRecord = isRecording ? stopRecording : startRecording;
 
-class Window extends Component {
-  constructor(props) {
-    super(props);
+  return (
+    <Fragment>
+      <PreviewVideo recording={isRecording} />
+      <SourcesList />
 
-    this.state = {
-      recording: false,
-      record: null
-    };
+      <Button className="primary size-big top" onClick={onRecord}>
+        {isRecording ? "Stop Recording" : "Record"}
+      </Button>
+      <Button
+        className="bottom size-big"
+        onClick={saveRecording}
+        disabled={isRecording}
+      >
+        Save
+      </Button>
+    </Fragment>
+  );
+};
 
-    desktopCapturer.getSources({types: ['window', 'screen']}, (error, sources) => {
-      sources.forEach(source => {
-        console.log("source:", source);
-      })
-    });
+export const mapStateToProps = state => ({
+  isRecording: state.recording.active,
+  source: state.stream.source
+});
+export const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      startRecording: RecordingActions.start,
+      stopRecording: RecordingActions.stop,
+      saveRecording: RecordingActions.save
+    },
+    dispatch
+  );
 
-    this.onRecord = this.onRecord.bind(this);
-    this.onSave = this.onSave.bind(this);
-    this.recording = null;
-  }
-
-  onNew(callback) {
-    this.setState({ record: new Recording(window.stream) }, callback);
-  }
-
-  onRecord(recording) {
-    let { record } = this.state;
-
-    const toggle = () => {
-      if (recording) {
-        this.state.record.start();
-        this.setState({ recording: true });
-      } else if (!recording) {
-        this.state.record.stop();
-        this.setState({ recording: false });
-      }
-    };
-
-    if (!record) {
-      this.onNew(toggle);
-    } else {
-      toggle();
-    }
-  }
-
-  onSave() {
-    this.state.record.save();
-  }
-
-  render() {
-    const { record, recording } = this.state;
-
-    return (
-      <Fragment>
-        <PreviewVideo recording={recording} />
-        <RecordButton onClick={this.onRecord} />
-        <Button
-          className="bottom size-big"
-          onClick={this.onSave}
-          disabled={!record || recording}
-        >
-          Save
-        </Button>
-        <SourcesList />
-      </Fragment>
-    );
-  }
-}
-
-export default Window;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Window);

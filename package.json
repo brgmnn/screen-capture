@@ -6,7 +6,7 @@
   "main": "src/index.js",
   "scripts": {
     "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
-    "format": "prettier --write src/*.js src/**/*.js",
+    "format": "prettier --write \"src/**/*.js\"",
     "lint": "eslint src --color",
     "start": "electron-forge start",
     "package": "electron-forge package",

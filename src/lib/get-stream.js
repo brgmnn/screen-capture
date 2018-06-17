@@ -1,13 +1,12 @@
-export default (sourceId) =>
+export default (sourceId = "") =>
   navigator.mediaDevices.getUserMedia({
     video: {
       mandatory: {
         chromeMediaSource: "desktop",
-        // chromeMediaSourceId: sourceId,
-        maxWidth: 1280,
-        maxHeight: 720,
-        maxFrameRate: 10,
-        minAspectRatio: 1.77
+        chromeMediaSourceId: sourceId,
+        maxWidth: 3840,
+        maxHeight: 2160,
+        maxFrameRate: 10
       }
     },
     audio: false

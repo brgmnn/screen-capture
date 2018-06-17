@@ -1,56 +1,41 @@
 import React, { Component } from "react";
-import { desktopCapturer } from "electron";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { setSource } from "../store/actions/stream";
 
 class SourcesList extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      sources: []
-    };
-
-    // this.onClick = this.onClick.bind(this);
-    this.getSources = this.getSources.bind(this);
     this.drawOptions = this.drawOptions.bind(this);
-
-    this.getSources();
-  }
-
-  // onClick() {
-  //   this.setState(state => {
-  //     const recording = !state.recording;
-  //     this.props.onClick(recording);
-  //     return { recording };
-  //   });
-  // }
-
-  getSources() {
-    desktopCapturer.getSources({ types: ['window', 'screen'] }, (error, sources) => {
-      console.log("sources", sources);
-      this.setState({
-        sources: sources.map(s => ({ id: s.id, name: s.name }))
-      });
-    });
   }
 
   drawOptions() {
-    return this.state.sources.map(s => (
-      <option key={s.id} value={s.id}>
-        {s.name.substr(0, 40)}
+    return this.props.sources.map(src => (
+      <option key={src.id} value={src.id}>
+        {src.name.substr(0, 40)}
       </option>
     ));
   }
 
   render() {
-    const { recording } = this.state;
+    const { setSource } = this.props;
 
     return (
-
-      <select onChange={(event) => { window.streamSource = event.target.value) }}>
+      <select onChange={e => setSource(e.target.value)}>
         {this.drawOptions()}
       </select>
     );
   }
 }
 
-export default SourcesList;
+export const mapStateToProps = state => ({
+  sources: state.stream.sourceList
+});
+export const mapDispatchToProps = dispatch =>
+  bindActionCreators({ setSource }, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SourcesList);
