@@ -1,8 +1,9 @@
 module.exports = {
   extends: [
     "./lint/imports.js",
+    "./lint/best-practices.js",
     "prettier",
-    "prettier/react"
+    "prettier/react",
   ],
   plugins: [
     "prettier",
