@@ -6,10 +6,10 @@ export default () =>
       { types: ["window", "screen"] },
       (error, sources) => {
         if (error) {
-          return reject(error);
+          reject(error);
+        } else {
+          resolve(sources.map(s => ({ id: s.id, name: s.name })));
         }
-
-        resolve(sources.map(s => ({ id: s.id, name: s.name })));
       }
     );
   });

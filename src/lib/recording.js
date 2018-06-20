@@ -1,6 +1,7 @@
 import fs from "fs";
 import { remote as app } from "electron";
 import blobToBuffer from "./blob-to-buffer";
+
 const { dialog } = app;
 
 export default class Recording {
@@ -47,9 +48,11 @@ export default class Recording {
         console.log("what is it ", typeof data);
         fs.writeFile(fileName, data, err => {
           if (err) {
+            // eslint-disable-next-line no-alert
             alert("An error ocurred creating the file " + err.message);
           }
 
+          // eslint-disable-next-line no-alert
           alert("The file has been succesfully saved");
         });
       });
