@@ -51,7 +51,7 @@ export function* save() {
   const sourceList = yield call(getSources);
   const { name } = sourceList.find(s => s.id === source);
 
-  const now = moment().format("MMMM Do YYYY, h:mm a");
+  const now = moment().format("YYYY MMMM Do, h-mma");
   const truncName = name
     .split(/\s/)
     .filter(w => w.match(/^\w+$/))
