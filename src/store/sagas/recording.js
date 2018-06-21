@@ -1,8 +1,12 @@
 import fs from "fs";
+import os from "os";
+import path from "path";
 import { remote as app } from "electron";
+import moment from "moment";
 import { call, select, takeEvery } from "redux-saga/effects";
 import * as Actions from "../actions/recording";
 import blobToBuffer from "../../lib/blob-to-buffer";
+import getSources from "../../lib/get-sources";
 import getStream from "../../lib/get-stream";
 
 const { dialog } = app;
@@ -43,27 +47,42 @@ export function* stop() {
 }
 
 export function* save() {
-  dialog.showSaveDialog(fileName => {
-    if (fileName === undefined) {
-      console.log("You didn't save the file");
-      return;
-    }
+  const source = yield select(store => store.stream.source);
+  const sourceList = yield call(getSources);
+  const { name } = sourceList.find(s => s.id === source);
 
-    blobToBuffer(blob()).then(data => {
-      console.log("what is it ", typeof data);
-      fs.writeFile(fileName, data, err => {
-        if (err) {
+  const now = moment().format("YYYY MMMM Do, h-mma");
+  const truncName = name
+    .split(/\s/)
+    .filter(w => w.match(/^\w+$/))
+    .join(" ")
+    .substr(0, 40);
+  const defaultName = `Recording of ${truncName} - ${now}`;
+
+  dialog.showSaveDialog(
+    { defaultPath: path.join(os.homedir(), `${defaultName}.webm`) },
+    fileName => {
+      if (fileName === undefined) {
+        console.log("You didn't save the file");
+        return;
+      }
+
+      blobToBuffer(blob()).then(data => {
+        console.log("what is it ", typeof data);
+        fs.writeFile(fileName, data, err => {
+          if (err) {
+            // eslint-disable-next-line no-alert
+            alert("An error ocurred creating the file " + err.message);
+          }
+
           // eslint-disable-next-line no-alert
-          alert("An error ocurred creating the file " + err.message);
-        }
-
-        // eslint-disable-next-line no-alert
-        alert("The file has been succesfully saved");
-        recorder = null;
-        data = [];
+          alert("The file has been succesfully saved");
+          recorder = null;
+          data = [];
+        });
       });
-    });
-  });
+    }
+  );
 }
 
 export default [

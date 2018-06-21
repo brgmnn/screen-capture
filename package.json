@@ -54,6 +54,7 @@
     "electron-compile": "^6.4.2",
     "electron-is-dev": "^0.3.0",
     "electron-squirrel-startup": "^1.0.0",
+    "moment": "^2.22.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
